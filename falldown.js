@@ -8,18 +8,23 @@ function drawCircle(myCircle, context) {
   context.fillStyle = '#005E7E';
   context.fill();
 }
-function animate(myCircle, canvas, context, startTime){
+function animate(circle1, circle2, canvas, context, startTime){
   var time = (new Date()).getTime() - startTime;
   var linearSpeed = 500;
   var newY = linearSpeed * time / 1000;
-  if(newY < canvas.height - myCircle.radius) {
-    myCircle.y = newY
+  if(newY < canvas.height - circle1.radius) {
+    circle1.y = newY
+  }
+  if(newY < canvas.height - circle2.radius) {
+    circle2.y = newY
   }
   context.clearRect(0, 0, canvas.width, canvas.height);
-  drawCircle(myCircle, context)
+  drawCircle(circle1, context)
+  drawCircle(circle2, context)
+
 
   requestAnimationFrame(function() {
-    animate(myCircle, canvas, context, startTime);
+    animate(circle1, circle2, canvas, context, startTime);
   })
 
 }; //end of function animate
@@ -30,13 +35,22 @@ function startAnimation(){
   var startTime = (new Date()).getTime();
   var canvas = document.getElementById('myCanvas');
   var context = canvas.getContext('2d');
-  var myCircle = {
-    x: 200,
-    y: 40,
-    radius: 40
+  function circle(){
+    this.x = randomXcoord(),
+    this.y = 40,
+    this.radius = randomRadius()
   }
-animate(myCircle, canvas, context, startTime)
 
+animate(new circle, new circle, canvas, context, startTime)
+
+}
+
+function randomXcoord(){
+  return Math.floor((Math.random() * 320) + 40)
+}
+
+function randomRadius(){
+  return Math.floor((Math.random() * 60) + 20)
 }
 };//end of window onload
 
