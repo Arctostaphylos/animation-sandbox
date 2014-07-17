@@ -8,23 +8,28 @@ function drawCircle(myCircle, context) {
   context.fillStyle = '#005E7E';
   context.fill();
 }
-function animate(circle1, circle2, canvas, context, startTime){
+function animate(circleCollection, canvas, context, startTime){
+
+
   var time = (new Date()).getTime() - startTime;
   var linearSpeed = 500;
   var newY = linearSpeed * time / 1000;
-  if(newY < canvas.height - circle1.radius) {
-    circle1.y = newY
+
+  for(i=0;i<circleCollection.length;i++){
+    if(newY < canvas.height - circleCollection[i].radius) {
+        circleCollection[i].y = newY
+    }
   }
-  if(newY < canvas.height - circle2.radius) {
-    circle2.y = newY
-  }
+
   context.clearRect(0, 0, canvas.width, canvas.height);
-  drawCircle(circle1, context)
-  drawCircle(circle2, context)
+
+  for(i=0;i<circleCollection.length;i++){
+    drawCircle(circleCollection[i], context)
+  }
 
 
   requestAnimationFrame(function() {
-    animate(circle1, circle2, canvas, context, startTime);
+    animate(circleCollection, canvas, context, startTime);
   })
 
 }; //end of function animate
@@ -35,15 +40,22 @@ function startAnimation(){
   var startTime = (new Date()).getTime();
   var canvas = document.getElementById('myCanvas');
   var context = canvas.getContext('2d');
+
+  var circleQuantity = 3
+
+  var circleCollection = []
+    for(i=0;i<circleQuantity;i++){
+    circleCollection.push(new circle)
+  }
+
+  animate(circleCollection, canvas, context, startTime)
+
+}
   function circle(){
     this.x = randomXcoord(),
     this.y = 40,
     this.radius = randomRadius()
   }
-
-animate(new circle, new circle, canvas, context, startTime)
-
-}
 
 function randomXcoord(){
   return Math.floor((Math.random() * 320) + 40)
