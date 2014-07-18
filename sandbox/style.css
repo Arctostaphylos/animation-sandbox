@@ -1,0 +1,8 @@
+body {
+  max-width: 400px;
+  margin: 40px auto;
+}
+canvas {
+  /*margin: auto;*/
+  border: 1px solid #26282B;
+}
